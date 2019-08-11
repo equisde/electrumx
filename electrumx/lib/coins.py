@@ -1808,7 +1808,31 @@ class Denarius(Coin):
         '''Given a header return the hash.'''
         import tribus_hash
         return tribus_hash.getPoWHash(header)
+class Haru(Coin):
+    NAME = "Haru"
+    SHORTNAME = "HARU"
+    NET = "mainnet"
+    XPUB_VERBYTES = bytes.fromhex("0488b21e")
+    XPRV_VERBYTES = bytes.fromhex("0488ade4")
+    P2PKH_VERBYTE = bytes.fromhex("1E")  # Address starts with a D
+    P2SH_VERBYTES = [bytes.fromhex("5A")]
+    WIF_BYTE = bytes.fromhex("9E")  # WIF starts with a 6
+    GENESIS_HASH = ('00000d7d557931da37d830ec526a0b58'
+                    '97de3123453f8142d3023af23dedc3fb')
+    DESERIALIZER = lib_tx.DeserializerTxTime
+    TX_COUNT = 4230
+    RPC_PORT = 32339
+    ESTIMATE_FEE = 0.00001
+    RELAY_FEE = 0.00001
+    DAEMON = daemon.FakeEstimateFeeDaemon
+    TX_COUNT_HEIGHT = 306187
+    TX_PER_BLOCK = 4000
 
+    @classmethod
+    def header_hash(cls, header):
+        '''Given a header return the hash.'''
+        import tribus_hash
+        return tribus_hash.getPoWHash(header)
 
 class DenariusTestnet(Denarius):
     NET = "testnet"
